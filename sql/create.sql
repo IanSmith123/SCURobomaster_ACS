@@ -33,4 +33,4 @@ CREATE TABLE visitor_stat (
 );
 
 -- init user and password, should be changed after the first login
-INSERT INTO system_admin (user_name, password) VALUES ('admin', md5('admin'));
+INSERT INTO system_admin (user_name, password) VALUES ('admin', 'admin');

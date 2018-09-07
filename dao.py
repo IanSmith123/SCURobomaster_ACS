@@ -42,7 +42,7 @@ def execute_one(sql, param_tuple=None, returning=False):
 
 
 def check_admin_password(username, password):
-    sql = "SELECT COUNT(*) FROM system_admin WHERE user_name=%s AND password=md5(%s)"
+    sql = "SELECT COUNT(*) FROM system_admin WHERE user_name=%s AND password=%s"
     rst = query(sql, (username, password))
     if rst is not None and rst[0][0] > 0:
         return True
@@ -51,7 +51,7 @@ def check_admin_password(username, password):
 
 
 def update_admin_password(username, old, new):
-    sql = "UPDATE system_admin SET password=MD5(%s) WHERE user_name=%s AND password=MD5(%s)"
+    sql = "UPDATE system_admin SET password=%s WHERE user_name=%s AND password=%s"
     execute_one(sql, (new, username, old))
 
 
