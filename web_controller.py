@@ -1,4 +1,4 @@
-from easy_py_server import Httpd, Request, Response  # https://github.com/scientificRat/easy_py_server
+from easy_py_server import httpd, Request, Response  # https://github.com/scientificRat/easy_py_server
 import utils
 import dao
 import hardware
@@ -13,7 +13,7 @@ def is_admin_login(request):
     return True
 
 
-@Httpd.post("/admin/login", content_type="application/json; charset=utf-8")
+@httpd.post("/admin/login", content_type="application/json; charset=utf-8")
 def admin_login(request: Request, response: Response):
     username = request.getParam("username")
     password = request.getParam("password")
@@ -24,13 +24,13 @@ def admin_login(request: Request, response: Response):
         return utils.JsonHelper.fail("username or password not correct")
 
 
-@Httpd.post("/admin/logout", content_type="application/json; charset=utf-8")
+@httpd.post("/admin/logout", content_type="application/json; charset=utf-8")
 def admin_logout(request: Request, response: Response):
     request.removeSession(__ADMIN_SESSION_KEY)
     return utils.JsonHelper.success()
 
 
-@Httpd.post("/admin/change-password", content_type="application/json; charset=utf-8")
+@httpd.post("/admin/change-password", content_type="application/json; charset=utf-8")
 def change_password(request: Request, response: Response):
     old = request.getParam("old_psw")
     new = request.getParam("new_psw")
@@ -45,7 +45,7 @@ def change_password(request: Request, response: Response):
     return utils.JsonHelper.success()
 
 
-@Httpd.get("/data/visitor-stat/by-count", content_type="application/json; charset=utf-8")
+@httpd.get("/data/visitor-stat/by-count", content_type="application/json; charset=utf-8")
 def get_visitor_stat_data_by_count(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -54,7 +54,7 @@ def get_visitor_stat_data_by_count(request: Request, response: Response):
     return utils.JsonHelper.success(rst)
 
 
-@Httpd.post("/delete/visitor-stat/by-id", content_type="application/json; charset=utf-8")
+@httpd.post("/delete/visitor-stat/by-id", content_type="application/json; charset=utf-8")
 def delete_visitor_stat_data_by_count(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -65,7 +65,7 @@ def delete_visitor_stat_data_by_count(request: Request, response: Response):
         return utils.JsonHelper.fail("id may not exist")
 
 
-@Httpd.get("/data/visitor-stat/by-date", content_type="application/json; charset=utf-8")
+@httpd.get("/data/visitor-stat/by-date", content_type="application/json; charset=utf-8")
 def get_visitor_stat_data_by_date(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -74,7 +74,7 @@ def get_visitor_stat_data_by_date(request: Request, response: Response):
     return utils.JsonHelper.success(rst)
 
 
-@Httpd.get("/data/raw/by-count", content_type="application/json; charset=utf-8")
+@httpd.get("/data/raw/by-count", content_type="application/json; charset=utf-8")
 def get_raw_data_by_count(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -83,7 +83,7 @@ def get_raw_data_by_count(request: Request, response: Response):
     return utils.JsonHelper.success(rst)
 
 
-@Httpd.get("/data/register-visitor/all", content_type="application/json; charset=utf-8")
+@httpd.get("/data/register-visitor/all", content_type="application/json; charset=utf-8")
 def get_register_visitors(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -91,7 +91,7 @@ def get_register_visitors(request: Request, response: Response):
     return utils.JsonHelper.success(rst)
 
 
-@Httpd.post("/add/register-visitor", content_type="application/json; charset=utf-8")
+@httpd.post("/add/register-visitor", content_type="application/json; charset=utf-8")
 def add_register_visitor(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -104,7 +104,7 @@ def add_register_visitor(request: Request, response: Response):
     return utils.JsonHelper.success()
 
 
-@Httpd.post("/delete/register-visitor", content_type="application/json; charset=utf-8")
+@httpd.post("/delete/register-visitor", content_type="application/json; charset=utf-8")
 def delete_register_visitor(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -115,7 +115,7 @@ def delete_register_visitor(request: Request, response: Response):
         return utils.JsonHelper.fail("id may not exist")
 
 
-@Httpd.get("/data/inside-visitor/all", content_type="application/json; charset=utf-8")
+@httpd.get("/data/inside-visitor/all", content_type="application/json; charset=utf-8")
 def get_inside_visitors(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -130,14 +130,14 @@ def get_inside_visitors(request: Request, response: Response):
     return utils.JsonHelper.success(rows)
 
 
-@Httpd.get("/hardware/current-card-id", content_type="application/json; charset=utf-8")
+@httpd.get("/hardware/current-card-id", content_type="application/json; charset=utf-8")
 def get_current_card_id(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
     return utils.JsonHelper.success(hardware.get_current_card_id())
 
 
-@Httpd.post("/hardware/set-mode/importing", content_type="application/json; charset=utf-8")
+@httpd.post("/hardware/set-mode/importing", content_type="application/json; charset=utf-8")
 def set_importing_mode(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
@@ -145,7 +145,7 @@ def set_importing_mode(request: Request, response: Response):
     return utils.JsonHelper.success()
 
 
-@Httpd.get("/hardware/last-update-time", content_type="application/json; charset=utf-8")
+@httpd.get("/hardware/last-update-time", content_type="application/json; charset=utf-8")
 def get_card_info_updated_time(request: Request, response: Response):
     if not is_admin_login(request):
         return utils.JsonHelper.fail("admin login required")
