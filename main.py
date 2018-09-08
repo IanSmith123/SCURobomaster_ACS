@@ -1,4 +1,4 @@
-from easy_py_server import Httpd
+from easy_py_server import httpd
 import conn_pool
 import hardware
 import web_controller
@@ -21,4 +21,4 @@ if __name__ == '__main__':
         os._exit(0)
     else:
         conn_pool.release_conn(test_conn)
-    Httpd.start_serve(address="0.0.0.0", port=80)
+    httpd.start_serve(address="0.0.0.0", port=80)
